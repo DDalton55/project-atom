@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import { Link } from "react-router-dom";
 import { FadeIn } from "@/components/FadeIn";
 import { ComparisonTable } from "@/components/ComparisonTable";
 import { NotificationCard } from "@/components/PayrollCards";
@@ -82,12 +83,20 @@ const Index = () => {
               Traditional embedded payroll embeds screens. Agentic embedded payroll embeds intelligence. The agent works through the host app's existing surfaces — notifications, feed items, chat. The host provides the surface. The agent provides the brain.
             </p>
 
-            <div className="flex items-center gap-6 text-sm">
+            <div className="flex flex-wrap items-center gap-4 text-sm">
+              <Link
+                to="/demo"
+                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-display font-700 text-primary-foreground transition-all hover:opacity-90 active:scale-[0.98]"
+                style={{ background: "var(--gradient-accent)" }}
+              >
+                View demo
+                <span>→</span>
+              </Link>
               <a
                 href="#how-it-works"
                 className="font-medium text-foreground hover:text-primary transition-colors"
               >
-                See how it works →
+                See how it works
               </a>
               <a
                 href="#comparison"
