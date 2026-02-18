@@ -1,10 +1,6 @@
 import { motion } from "framer-motion";
-
-interface ScreenProps {
-  onApprove?: () => void;
-  approved?: boolean;
-  onNext?: () => void;
-}
+import type { ScreenProps } from "./types";
+import { PhoneBottomNav } from "./PhoneBottomNav";
 
 export function NotificationScreen({ onNext }: ScreenProps) {
   return (
@@ -40,7 +36,7 @@ export function NotificationScreen({ onNext }: ScreenProps) {
               <div className="text-[10px] text-muted-foreground">now</div>
             </div>
           </div>
-          
+
           <div className="text-sm font-semibold text-foreground mb-1.5">
             Payroll ready for review
           </div>
@@ -51,6 +47,7 @@ export function NotificationScreen({ onNext }: ScreenProps) {
           </div>
 
           <button
+            type="button"
             onClick={onNext}
             className="w-full text-xs font-semibold py-2 rounded-xl text-primary-foreground transition-all active:scale-[0.98]"
             style={{ background: "var(--gradient-accent)" }}
@@ -60,15 +57,7 @@ export function NotificationScreen({ onNext }: ScreenProps) {
         </div>
       </motion.div>
 
-      {/* Bottom nav */}
-      <div className="border-t border-divider px-6 py-3 flex justify-around">
-        {["Home", "Pay", "Cards", "More"].map((item, i) => (
-          <div key={i} className={`text-[10px] flex flex-col items-center gap-1 ${i === 0 ? "text-primary" : "text-muted-foreground"}`}>
-            <div className={`w-1 h-1 rounded-full ${i === 0 ? "bg-primary" : "bg-transparent"}`} />
-            {item}
-          </div>
-        ))}
-      </div>
+      <PhoneBottomNav />
     </div>
   );
 }

@@ -1,8 +1,8 @@
+@import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
-@import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600&display=swap');
 
 /* Design system — all colors in HSL, all tokens defined here */
 
@@ -58,15 +58,6 @@
     --shadow-card: 0 1px 3px 0 hsl(0 0% 0% / 0.4), 0 0 0 1px hsl(20 5% 16% / 1);
     --shadow-accent: 0 0 24px hsl(18 80% 54% / 0.15);
 
-    /* Sidebar (unused but required) */
-    --sidebar-background: 20 8% 6%;
-    --sidebar-foreground: 40 10% 75%;
-    --sidebar-primary: 18 80% 54%;
-    --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 20 6% 13%;
-    --sidebar-accent-foreground: 40 10% 75%;
-    --sidebar-border: 20 5% 16%;
-    --sidebar-ring: 18 80% 54%;
   }
 }
 

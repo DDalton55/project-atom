@@ -1,10 +1,6 @@
 import { motion } from "framer-motion";
-
-interface ScreenProps {
-  onApprove?: () => void;
-  approved?: boolean;
-  onNext?: () => void;
-}
+import type { ScreenProps } from "./types";
+import { PhoneBottomNav } from "./PhoneBottomNav";
 
 const ENRICHED_TRANSACTIONS = [
   {
@@ -54,7 +50,7 @@ const ENRICHED_TRANSACTIONS = [
   },
 ];
 
-export function ConfirmationScreen({}: ScreenProps) {
+export function ConfirmationScreen(_props: ScreenProps) {
   return (
     <div className="flex flex-col h-full bg-[hsl(20_8%_6%)] font-sans">
       <div className="px-5 pt-4 pb-2">
@@ -137,15 +133,7 @@ export function ConfirmationScreen({}: ScreenProps) {
         </div>
       </div>
 
-      {/* Bottom nav */}
-      <div className="border-t border-divider px-6 py-3 flex justify-around">
-        {["Home", "Pay", "Cards", "More"].map((item, i) => (
-          <div key={i} className={`text-[10px] flex flex-col items-center gap-1 ${i === 0 ? "text-primary" : "text-muted-foreground"}`}>
-            <div className={`w-1 h-1 rounded-full ${i === 0 ? "bg-primary" : "bg-transparent"}`} />
-            {item}
-          </div>
-        ))}
-      </div>
+      <PhoneBottomNav />
     </div>
   );
 }

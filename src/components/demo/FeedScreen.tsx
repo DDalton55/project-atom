@@ -1,10 +1,16 @@
-interface ScreenProps {
-  onApprove?: () => void;
-  approved?: boolean;
-  onNext?: () => void;
-}
+import type { ScreenProps } from "./types";
+import { PhoneBottomNav } from "./PhoneBottomNav";
 
-const TRANSACTIONS = [
+type Transaction = {
+  icon: string;
+  name: string;
+  amount: string;
+  sub: string;
+  time: string;
+  positive?: boolean;
+};
+
+const TRANSACTIONS: Transaction[] = [
   { icon: "🏬", name: "Office Direct", amount: "-£2,340.00", sub: "Monthly rent · Mar 1", time: "Mar 1" },
   { icon: "⚡", name: "British Gas Business", amount: "-£318.50", sub: "Utility bill", time: "Feb 28" },
   { icon: "📦", name: "Acme Supplies Ltd", amount: "-£1,290.00", sub: "Invoice #2891", time: "Feb 27" },
@@ -12,7 +18,7 @@ const TRANSACTIONS = [
   { icon: "☕", name: "Pret A Manger", amount: "-£18.40", sub: "Team lunch", time: "Feb 25" },
 ];
 
-export function FeedScreen({}: ScreenProps) {
+export function FeedScreen(_props: ScreenProps) {
   return (
     <div className="flex flex-col h-full bg-[hsl(20_8%_6%)] font-sans">
       {/* Header */}
@@ -46,7 +52,7 @@ export function FeedScreen({}: ScreenProps) {
                 <div className="text-[10px] text-muted-foreground">{tx.sub}</div>
               </div>
               <div className="text-right flex-shrink-0">
-                <div className={`text-xs font-semibold ${(tx as any).positive ? "text-primary" : "text-foreground"}`}>{tx.amount}</div>
+                <div className={`text-xs font-semibold ${tx.positive ? "text-primary" : "text-foreground"}`}>{tx.amount}</div>
                 <div className="text-[10px] text-muted-foreground">{tx.time}</div>
               </div>
             </div>
@@ -54,15 +60,7 @@ export function FeedScreen({}: ScreenProps) {
         </div>
       </div>
 
-      {/* Bottom nav */}
-      <div className="border-t border-divider px-6 py-3 flex justify-around">
-        {["Home", "Pay", "Cards", "More"].map((item, i) => (
-          <div key={i} className={`text-[10px] flex flex-col items-center gap-1 ${i === 0 ? "text-primary" : "text-muted-foreground"}`}>
-            <div className={`w-1 h-1 rounded-full ${i === 0 ? "bg-primary" : "bg-transparent"}`} />
-            {item}
-          </div>
-        ))}
-      </div>
+      <PhoneBottomNav />
     </div>
   );
 }

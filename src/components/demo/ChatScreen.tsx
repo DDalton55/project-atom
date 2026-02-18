@@ -1,11 +1,6 @@
 import { motion } from "framer-motion";
-import { useState } from "react";
-
-interface ScreenProps {
-  onApprove?: () => void;
-  approved?: boolean;
-  onNext?: () => void;
-}
+import { useEffect, useRef, useState } from "react";
+import type { ScreenProps } from "./types";
 
 type Message = {
   from: "owner" | "agent";
@@ -50,18 +45,26 @@ const RESPONSES: Record<string, Message[]> = {
   ],
 };
 
-export function ChatScreen({}: ScreenProps) {
+export function ChatScreen(_props: ScreenProps) {
   const [messages, setMessages] = useState<Message[]>(INITIAL_MESSAGES);
   const [used, setUsed] = useState<string[]>([]);
+  const pendingTimeout = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  const sendMessage = (query: string, label: string) => {
+  useEffect(() => {
+    return () => {
+      if (pendingTimeout.current) clearTimeout(pendingTimeout.current);
+    };
+  }, []);
+
+  const sendMessage = (query: string) => {
     if (used.includes(query)) return;
     setUsed((u) => [...u, query]);
     const userMsg: Message = { from: "owner", text: query };
     setMessages((m) => [...m, userMsg]);
-    setTimeout(() => {
+    pendingTimeout.current = setTimeout(() => {
       const responses = RESPONSES[query] || [];
       setMessages((m) => [...m, ...responses]);
+      pendingTimeout.current = null;
     }, 600);
   };
 
@@ -105,6 +108,7 @@ export function ChatScreen({}: ScreenProps) {
                 <div className="flex gap-1.5 flex-wrap">
                   {msg.actions.map((action, j) => (
                     <button
+                      type="button"
                       key={j}
                       className={`text-[10px] px-2.5 py-1 rounded-full border transition-colors ${
                         j === 0
@@ -128,8 +132,9 @@ export function ChatScreen({}: ScreenProps) {
         <div className="flex flex-col gap-1.5">
           {PROMPTS.filter((p) => !used.includes(p.query)).slice(0, 2).map((prompt, i) => (
             <button
+              type="button"
               key={i}
-              onClick={() => sendMessage(prompt.query, prompt.label)}
+              onClick={() => sendMessage(prompt.query)}
               className="text-left text-[11px] text-secondary border border-divider rounded-xl px-3 py-2 hover:border-primary/30 hover:text-foreground transition-all"
             >
               {prompt.query}

@@ -1,11 +1,6 @@
 import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
-
-interface ScreenProps {
-  onApprove?: () => void;
-  approved?: boolean;
-  onNext?: () => void;
-}
+import type { ScreenProps } from "./types";
 
 const PAYMENTS = [
   "Tom Parker — £2,500.73",
@@ -33,16 +28,18 @@ export function ProcessingScreen({ onNext }: ScreenProps) {
   const [done, setDone] = useState(false);
 
   useEffect(() => {
+    const ids: ReturnType<typeof setTimeout>[] = [];
     MILESTONES.forEach((m, i) => {
-      setTimeout(() => {
+      ids.push(setTimeout(() => {
         setMilestones((prev) => {
           const next = [...prev];
           next[i] = true;
           return next;
         });
-      }, m.delay * 1000);
+      }, m.delay * 1000));
     });
-    setTimeout(() => setDone(true), 3600);
+    ids.push(setTimeout(() => setDone(true), 3600));
+    return () => ids.forEach(clearTimeout);
   }, []);
 
   return (
@@ -98,6 +95,7 @@ export function ProcessingScreen({ onNext }: ScreenProps) {
 
       {done && (
         <motion.button
+          type="button"
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           onClick={onNext}

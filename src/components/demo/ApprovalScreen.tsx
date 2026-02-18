@@ -1,11 +1,6 @@
 import { motion } from "framer-motion";
 import { useState } from "react";
-
-interface ScreenProps {
-  onApprove?: () => void;
-  approved?: boolean;
-  onNext?: () => void;
-}
+import type { ScreenProps } from "./types";
 
 export function ApprovalScreen({ onApprove }: ScreenProps) {
   const [acknowledged, setAcknowledged] = useState(false);
@@ -47,6 +42,7 @@ export function ApprovalScreen({ onApprove }: ScreenProps) {
             </div>
             {!acknowledged && (
               <button
+                type="button"
                 onClick={() => setAcknowledged(true)}
                 className="mt-2 ml-6 text-[10px] font-medium text-primary border border-primary/30 rounded-lg px-3 py-1 hover:bg-primary/10 transition-colors"
               >
@@ -84,6 +80,7 @@ export function ApprovalScreen({ onApprove }: ScreenProps) {
 
           {/* CTA */}
           <button
+            type="button"
             onClick={onApprove}
             className="w-full py-3.5 rounded-2xl text-sm font-display font-700 text-primary-foreground transition-all active:scale-[0.98] hover:opacity-90"
             style={{ background: "var(--gradient-accent)" }}
