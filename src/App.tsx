@@ -4,7 +4,7 @@ import Demo from "./pages/Demo";
 import NotFound from "./pages/NotFound";
 
 const App = () => (
-  <BrowserRouter>
+  <BrowserRouter basename={import.meta.env.BASE_URL}>
     <Routes>
       <Route path="/" element={<Index />} />
       <Route path="/demo" element={<Demo />} />
